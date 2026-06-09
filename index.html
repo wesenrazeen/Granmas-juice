@@ -42,6 +42,29 @@
                 </div>
 
                 <button class="cta-button">Add to Cart & Order</button>
+
+                <div class="order-panel" id="orderPanel" aria-hidden="true">
+                    <h2>Order Summary</h2>
+                    <p>Select your quantity and confirm your order below.</p>
+
+                    <div class="order-row">
+                        <label for="quantity">Quantity</label>
+                        <input id="quantity" type="number" min="1" value="1">
+                    </div>
+
+                    <div class="order-row">
+                        <span>Price per bottle</span>
+                        <strong>$14.99</strong>
+                    </div>
+
+                    <div class="order-row total-row">
+                        <span>Total</span>
+                        <strong id="totalPrice">$14.99</strong>
+                    </div>
+
+                    <button class="confirm-button" id="confirmOrder">Confirm Order</button>
+                    <p class="order-message" id="orderMessage" aria-live="polite"></p>
+                </div>
             </div>
         </div>
     </main>
@@ -96,5 +119,36 @@
         <p>© 2026 Gramma's Juice. All Rights Reserved. Product of DR Congo.</p>
     </footer>
 
+    <script>
+        const unitPrice = 14.99;
+        const buyBtn = document.querySelector('.cta-button');
+        const orderPanel = document.getElementById('orderPanel');
+        const quantityInput = document.getElementById('quantity');
+        const totalPriceEl = document.getElementById('totalPrice');
+        const confirmBtn = document.getElementById('confirmOrder');
+        const orderMessage = document.getElementById('orderMessage');
+
+        function updateTotal() {
+            const qty = Math.max(1, parseInt(quantityInput.value, 10) || 1);
+            totalPriceEl.textContent = `$${(unitPrice * qty).toFixed(2)}`;
+            quantityInput.value = qty;
+        }
+
+        buyBtn.addEventListener('click', function () {
+            orderPanel.classList.add('active');
+            orderPanel.setAttribute('aria-hidden', 'false');
+            orderMessage.textContent = '';
+            updateTotal();
+            orderPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+
+        quantityInput.addEventListener('input', updateTotal);
+
+        confirmBtn.addEventListener('click', function () {
+            const qty = Math.max(1, parseInt(quantityInput.value, 10) || 1);
+            orderMessage.textContent = `✅ ${qty} bottle${qty > 1 ? 's' : ''} added to your cart. Total: $${(unitPrice * qty).toFixed(2)}.`;
+            orderPanel.classList.add('confirmed');
+        });
+    </script>
 </body>
 </html>
