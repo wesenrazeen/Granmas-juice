@@ -41,11 +41,11 @@
                     <span class="stock-status">🟢 In Stock</span>
                 </div>
 
-                <button class="cta-button">Add to Cart & Order</button>
+                <a href="https://wa.me/447534482866" target="_blank" class="cta-button">Order via WhatsApp</a>
 
-                <div class="order-panel" id="orderPanel" aria-hidden="true">
-                    <h2>Order Summary</h2>
-                    <p>Select your quantity and confirm your order below.</p>
+                <div class="order-panel" id="orderPanel" aria-hidden="true" style="display: none;">
+                    <h2>Checkout</h2>
+                    <p>Choose your quantity, then proceed to secure Stripe checkout.</p>
 
                     <div class="order-row">
                         <label for="quantity">Quantity</label>
@@ -62,7 +62,7 @@
                         <strong id="totalPrice">$14.99</strong>
                     </div>
 
-                    <button class="confirm-button" id="confirmOrder">Confirm Order</button>
+                    <button class="confirm-button" id="confirmOrder">Pay with debit/credit card</button>
                     <p class="order-message" id="orderMessage" aria-live="polite"></p>
                 </div>
             </div>
@@ -120,35 +120,8 @@
     </footer>
 
     <script>
-        const unitPrice = 14.99;
-        const buyBtn = document.querySelector('.cta-button');
-        const orderPanel = document.getElementById('orderPanel');
-        const quantityInput = document.getElementById('quantity');
-        const totalPriceEl = document.getElementById('totalPrice');
-        const confirmBtn = document.getElementById('confirmOrder');
-        const orderMessage = document.getElementById('orderMessage');
-
-        function updateTotal() {
-            const qty = Math.max(1, parseInt(quantityInput.value, 10) || 1);
-            totalPriceEl.textContent = `$${(unitPrice * qty).toFixed(2)}`;
-            quantityInput.value = qty;
-        }
-
-        buyBtn.addEventListener('click', function () {
-            orderPanel.classList.add('active');
-            orderPanel.setAttribute('aria-hidden', 'false');
-            orderMessage.textContent = '';
-            updateTotal();
-            orderPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-
-        quantityInput.addEventListener('input', updateTotal);
-
-        confirmBtn.addEventListener('click', function () {
-            const qty = Math.max(1, parseInt(quantityInput.value, 10) || 1);
-            orderMessage.textContent = `✅ ${qty} bottle${qty > 1 ? 's' : ''} added to your cart. Total: $${(unitPrice * qty).toFixed(2)}.`;
-            orderPanel.classList.add('confirmed');
-        });
+        // WhatsApp link is active - order panel and Stripe checkout removed
     </script>
+
 </body>
 </html>
